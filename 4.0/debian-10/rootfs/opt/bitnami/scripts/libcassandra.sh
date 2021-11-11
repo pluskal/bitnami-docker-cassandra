@@ -64,6 +64,7 @@ export CASSANDRA_DATACENTER="${CASSANDRA_DATACENTER:-dc1}"
 export CASSANDRA_ENABLE_REMOTE_CONNECTIONS="${CASSANDRA_ENABLE_REMOTE_CONNECTIONS:-true}"
 export CASSANDRA_ENABLE_RPC="${CASSANDRA_ENABLE_RPC:-true}"
 export CASSANDRA_ENABLE_USER_DEFINED_FUNCTIONS="${CASSANDRA_ENABLE_USER_DEFINED_FUNCTIONS:-false}"
+export CASSANDRA_ENABLE_MATERIALIZED_VIEWS="${CASSANDRA_ENABLE_MATERIALIZED_VIEWS:-false}"
 export CASSANDRA_ENDPOINT_SNITCH="${CASSANDRA_ENDPOINT_SNITCH:-SimpleSnitch}"
 export CASSANDRA_HOST="${CASSANDRA_HOST:-$(hostname)}"
 export CASSANDRA_INTERNODE_ENCRYPTION="${CASSANDRA_INTERNODE_ENCRYPTION:-none}"
@@ -317,6 +318,7 @@ cassandra_validate() {
     check_true_false_value CASSANDRA_ENABLE_REMOTE_CONNECTIONS
     check_true_false_value CASSANDRA_CLIENT_ENCRYPTION
     check_true_false_value CASSANDRA_ENABLE_USER_DEFINED_FUNCTIONS
+    check_true_false_value CASSANDRA_ENABLE_MATERIALIZED_VIEWS
     check_positive_value CASSANDRA_NUM_TOKENS
     check_positive_value CASSANDRA_INIT_MAX_RETRIES
     check_positive_value CASSANDRA_CQL_MAX_RETRIES
@@ -500,6 +502,7 @@ cassandra_setup_cluster() {
         cassandra_yaml_set "seeds" "$CASSANDRA_SEEDS"
         cassandra_yaml_set "start_rpc" "$CASSANDRA_ENABLE_RPC" "no"
         cassandra_yaml_set "enable_user_defined_functions" "$CASSANDRA_ENABLE_USER_DEFINED_FUNCTIONS" "no"
+        cassandra_yaml_set "enable_materialized_views" "$CASSANDRA_ENABLE_MATERIALIZED_VIEWS" "false"
         cassandra_yaml_set "rpc_address" "$rpc_address"
         cassandra_yaml_set "broadcast_rpc_address" "$host"
         cassandra_yaml_set "endpoint_snitch" "$CASSANDRA_ENDPOINT_SNITCH"
